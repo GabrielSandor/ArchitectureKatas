@@ -66,6 +66,7 @@ namespace MakeTheGrade
             synchronizer.Uses(locatTestResultsStorage, "Read from");
 
             testingApp.Uses(testResultQueue, "Undertake test");
+            testingApp.Uses(testsCatalogueSubSystem, "Pull tests");
             testResultQueue.Uses(evaluator, "Notify grader");
             evaluator.Uses(locatTestResultsStorage, "Store and read results");
             evaluator.Uses(testsCatalogueSubSystem, "Pull tests");
