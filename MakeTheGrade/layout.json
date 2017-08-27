@@ -1,0 +1,557 @@
+﻿{
+    "model": {
+        "people": [
+            {
+                "location": "Unspecified",
+                "id": "1",
+                "name": "Student",
+                "description": "A student undertaking a test.",
+                "relationships": [
+                    {
+                        "id": "9",
+                        "description": "Undertakes tests",
+                        "sourceId": "1",
+                        "destinationId": "8",
+                        "tags": "Relationship,Synchronous"
+                    },
+                    {
+                        "id": "34",
+                        "description": "Undertake test",
+                        "sourceId": "1",
+                        "destinationId": "22",
+                        "tags": "Relationship,Synchronous"
+                    }
+                ],
+                "tags": "Element,Person"
+            },
+            {
+                "location": "Unspecified",
+                "id": "2",
+                "name": "Grader",
+                "description": "A grader assessing the sudents' test answers.",
+                "relationships": [
+                    {
+                        "id": "10",
+                        "description": "Grades students",
+                        "sourceId": "2",
+                        "destinationId": "8",
+                        "tags": "Relationship,Synchronous"
+                    },
+                    {
+                        "id": "35",
+                        "description": "Grade test answers",
+                        "sourceId": "2",
+                        "destinationId": "24",
+                        "tags": "Relationship,Synchronous"
+                    }
+                ],
+                "tags": "Element,Person"
+            },
+            {
+                "location": "Unspecified",
+                "id": "3",
+                "name": "Administrator",
+                "description": "A representative of the state authority in education.",
+                "relationships": [
+                    {
+                        "id": "5",
+                        "description": "Extracts grading reports.",
+                        "sourceId": "3",
+                        "destinationId": "4",
+                        "tags": "Relationship,Synchronous"
+                    },
+                    {
+                        "id": "7",
+                        "description": "Administers tests.",
+                        "sourceId": "3",
+                        "destinationId": "6",
+                        "tags": "Relationship,Synchronous"
+                    },
+                    {
+                        "id": "32",
+                        "description": "Extracts reports",
+                        "sourceId": "3",
+                        "destinationId": "14",
+                        "tags": "Relationship,Synchronous"
+                    },
+                    {
+                        "id": "33",
+                        "description": "Administers tests",
+                        "sourceId": "3",
+                        "destinationId": "17",
+                        "tags": "Relationship,Synchronous"
+                    }
+                ],
+                "tags": "Element,Person"
+            }
+        ],
+        "softwareSystems": [
+            {
+                "containers": [
+                    {
+                        "technology": "Microsoft Azure SQL Database",
+                        "components": [],
+                        "id": "13",
+                        "name": "Results Database",
+                        "description": "Single location representing all of the test scores across the state.",
+                        "relationships": [],
+                        "tags": "Element,Container,Database"
+                    },
+                    {
+                        "technology": "ASP.NET single page app",
+                        "components": [],
+                        "id": "14",
+                        "name": "Reporting Service",
+                        "description": "A reporting system to know which students have taken the tests and what score they received.",
+                        "relationships": [
+                            {
+                                "id": "15",
+                                "description": "Reads from",
+                                "sourceId": "14",
+                                "destinationId": "13",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container"
+                    }
+                ],
+                "id": "4",
+                "name": "Results Repository",
+                "description": "Single location representing all of the test scores across the state.",
+                "relationships": [],
+                "tags": "Element,Software System"
+            },
+            {
+                "containers": [
+                    {
+                        "technology": "ASP.NET Web API microservice",
+                        "components": [],
+                        "id": "16",
+                        "name": "Catalogue Service",
+                        "description": "Web API provider of latest test and grading rules.",
+                        "relationships": [
+                            {
+                                "id": "20",
+                                "description": "Reads from",
+                                "sourceId": "16",
+                                "destinationId": "18",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container"
+                    },
+                    {
+                        "technology": "ASP.NET MVC web app",
+                        "components": [],
+                        "id": "17",
+                        "name": "Catalogue Front End",
+                        "description": "Front end application for administrators managing tests.",
+                        "relationships": [
+                            {
+                                "id": "19",
+                                "description": "Reads from and writes to",
+                                "sourceId": "17",
+                                "destinationId": "18",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container"
+                    },
+                    {
+                        "technology": "NoSQL DBMS",
+                        "components": [],
+                        "id": "18",
+                        "name": "Tests Repository",
+                        "description": "Stores test questions, answers and grading rules.",
+                        "relationships": [],
+                        "tags": "Element,Container,Database"
+                    }
+                ],
+                "id": "6",
+                "name": "Tests Catalogue",
+                "description": "Authoritative source for tests and grading rules.",
+                "relationships": [],
+                "tags": "Element,Software System"
+            },
+            {
+                "containers": [
+                    {
+                        "technology": "MySQL database",
+                        "components": [],
+                        "id": "21",
+                        "name": "Local Tests Storage",
+                        "description": "Stores test answers and grades for students from local testing unit.",
+                        "relationships": [],
+                        "tags": "Element,Container,Database"
+                    },
+                    {
+                        "technology": "AngularJS web app",
+                        "components": [],
+                        "id": "22",
+                        "name": "Testing application",
+                        "description": "Allows students to undertake tests and graders to assess them.",
+                        "relationships": [
+                            {
+                                "id": "28",
+                                "description": "Undertake test",
+                                "sourceId": "22",
+                                "destinationId": "23",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container"
+                    },
+                    {
+                        "technology": "RabbitMQ",
+                        "components": [],
+                        "id": "23",
+                        "name": "Test results queue",
+                        "description": "Asynchronous queue on which an event is placed when a student finishes a test, so that a grader can be notified.",
+                        "relationships": [
+                            {
+                                "id": "29",
+                                "description": "Notify grader",
+                                "sourceId": "23",
+                                "destinationId": "24",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container,Queue"
+                    },
+                    {
+                        "technology": "",
+                        "components": [],
+                        "id": "24",
+                        "name": "Evaluator",
+                        "description": "Retrieves a finished test, grades the multiple choice answers and gives manual control to graders",
+                        "relationships": [
+                            {
+                                "id": "30",
+                                "description": "Store and read results",
+                                "sourceId": "24",
+                                "destinationId": "21",
+                                "tags": "Relationship,Synchronous"
+                            },
+                            {
+                                "id": "31",
+                                "description": "Pull tests",
+                                "sourceId": "24",
+                                "destinationId": "6",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container"
+                    },
+                    {
+                        "technology": "WCF service",
+                        "components": [],
+                        "id": "25",
+                        "name": "Synchronizer",
+                        "description": "Uploads local test results to central repository",
+                        "relationships": [
+                            {
+                                "id": "26",
+                                "description": "Push results (batch)",
+                                "sourceId": "25",
+                                "destinationId": "4",
+                                "tags": "Relationship,Synchronous"
+                            },
+                            {
+                                "id": "27",
+                                "description": "Read from",
+                                "sourceId": "25",
+                                "destinationId": "21",
+                                "tags": "Relationship,Synchronous"
+                            }
+                        ],
+                        "tags": "Element,Container"
+                    }
+                ],
+                "id": "8",
+                "name": "Local Testing Unit",
+                "description": "On-premises testing subsystem deployed in each testing center.",
+                "relationships": [
+                    {
+                        "id": "11",
+                        "description": "Push results (batch)",
+                        "sourceId": "8",
+                        "destinationId": "4",
+                        "tags": "Relationship,Synchronous"
+                    },
+                    {
+                        "id": "12",
+                        "description": "Pull tests",
+                        "sourceId": "8",
+                        "destinationId": "6",
+                        "tags": "Relationship,Synchronous"
+                    }
+                ],
+                "tags": "Element,Software System"
+            }
+        ]
+    },
+    "views": {
+        "enterpriseContextViews": [],
+        "systemContextViews": [
+            {
+                "key": "SystemContext",
+                "softwareSystemId": "6",
+                "description": "A system used for standardized testing across all public school systems grades 3-12.",
+                "paperSize": "Slide_16_9",
+                "elements": [
+                    {
+                        "id": "6",
+                        "x": 2240,
+                        "y": 855
+                    },
+                    {
+                        "id": "4",
+                        "x": 1245,
+                        "y": 75
+                    },
+                    {
+                        "id": "8",
+                        "x": 1245,
+                        "y": 855
+                    },
+                    {
+                        "id": "1",
+                        "x": 1605,
+                        "y": 1385
+                    },
+                    {
+                        "id": "2",
+                        "x": 975,
+                        "y": 1385
+                    },
+                    {
+                        "id": "3",
+                        "x": 2265,
+                        "y": 25
+                    }
+                ],
+                "relationships": [
+                    {
+                        "id": "11",
+                        "vertices": []
+                    },
+                    {
+                        "id": "12",
+                        "vertices": []
+                    },
+                    {
+                        "id": "9"
+                    },
+                    {
+                        "id": "10"
+                    },
+                    {
+                        "id": "5",
+                        "vertices": []
+                    },
+                    {
+                        "id": "7",
+                        "vertices": []
+                    }
+                ]
+            }
+        ],
+        "containerViews": [
+            {
+                "key": "ResultsContainer",
+                "softwareSystemId": "4",
+                "description": "The container diagram for the Results Repository Subsystem.",
+                "paperSize": "Slide_16_9",
+                "elements": [
+                  {
+                    "id": "3",
+                    "x": 2465,
+                    "y": 410
+                  },
+                    {
+                        "id": "13",
+                        "x": 1470,
+                        "y": 1095
+                    },
+                    {
+                        "id": "14",
+                        "x": 1470,
+                        "y": 460
+                    }
+                ],
+                "relationships": [
+                    {
+                        "id": "15",
+                        "vertices": []
+                    },
+                    {
+                        "id": "32",
+                        "vertices": []
+                    }
+                ]
+            },
+            {
+                "key": "TestsContainers",
+                "softwareSystemId": "6",
+                "description": "The container diagram for the Tests Catalogue Subsystem.",
+                "paperSize": "Slide_16_9",
+                "elements": [
+                    {
+                        "id": "3",
+                        "x": 1905,
+                        "y": 185
+                    },
+                    {
+                        "id": "16",
+                        "x": 1070,
+                        "y": 935
+                    },
+                    {
+                        "id": "17",
+                        "x": 1880,
+                        "y": 935
+                    },
+                    {
+                        "id": "18",
+                        "x": 1435,
+                        "y": 1480
+                    }
+                ],
+                "relationships": [
+                    {
+                        "id": "33",
+                        "vertices": []
+                    },
+                    {
+                        "id": "20",
+                        "vertices": []
+                    },
+                    {
+                        "id": "19",
+                        "vertices": []
+                    }
+                ]
+            },
+            {
+                "key": "TestUnitsContainers",
+                "softwareSystemId": "8",
+                "description": "The container diagram for the Local Testing Unit Subsystem.",
+                "paperSize": "A4_Landscape",
+                "elements": [
+                    {
+                        "id": "1",
+                        "x": 1980,
+                        "y": 260
+                    },
+                    {
+                        "id": "2",
+                        "x": 140,
+                        "y": 1455
+                    },
+                    {
+                        "id": "21",
+                        "x": 1415,
+                        "y": 1970
+                    },
+                    {
+                        "id": "22",
+                        "x": 1955,
+                        "y": 860
+                    },
+                    {
+                        "id": "23",
+                        "x": 815,
+                        "y": 860
+                    },
+                    {
+                        "id": "24",
+                        "x": 815,
+                        "y": 1505
+                    },
+                    {
+                        "id": "25",
+                        "x": 1415,
+                        "y": 1220
+                    },
+                    {
+                        "id": "4",
+                        "x": 1415,
+                        "y": 310
+                    },
+                    {
+                        "id": "6",
+                        "x": 2630,
+                        "y": 1505
+                    }
+                ],
+                "relationships": [
+                    {
+                        "id": "34",
+                        "vertices": []
+                    },
+                    {
+                        "id": "28",
+                        "vertices": []
+                    },
+                    {
+                        "id": "30"
+                    },
+                    {
+                        "id": "35",
+                        "vertices": []
+                    },
+                    {
+                        "id": "29",
+                        "vertices": []
+                    },
+                    {
+                        "id": "27"
+                    },
+                    {
+                        "id": "26"
+                    },
+                    {
+                        "id": "31"
+                    }
+                ]
+            }
+        ],
+        "componentViews": [],
+        "dynamicViews": [],
+        "configuration": {
+            "styles": {
+                "relationships": [],
+                "elements": [
+                    {
+                        "tag": "Software System",
+                        "background": "#1168bd",
+                        "color": "#ffffff"
+                    },
+                    {
+                        "tag": "Person",
+                        "background": "#08427b",
+                        "color": "#ffffff",
+                        "shape": "Person"
+                    },
+                    {
+                        "tag": "Database",
+                        "shape": "Cylinder"
+                    },
+                    {
+                        "tag": "Queue",
+                        "shape": "Ellipse"
+                    }
+                ]
+            },
+            "branding": {},
+            "lastSavedView": "TestsContainers"
+        }
+    },
+    "documentation": {
+        "sections": [],
+        "images": []
+    },
+    "id": 36985,
+    "name": "Architectural Kata: Make the Grade",
+    "description": "This is a model of the solution to the architectural kata \"Make the Grade\", found at http://nealford.com/katas/list.html."
+}
